@@ -1,9 +1,0 @@
-{
-  "version": "1",
-  "name": "expressJS 2026\\",
-  "type": "collection",
-  "ignore": [
-    "node_modules",
-    ".git"
-  ]
-}
