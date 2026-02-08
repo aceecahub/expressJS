@@ -1,0 +1,28 @@
+meta {
+  name: test
+  type: http
+  seq: 1
+}
+
+put {
+  url: http://localhost:3000/users/4
+  body: json
+  auth: inherit
+}
+
+headers {
+  api-key: login
+}
+
+body:json {
+  {
+    "id": 4,
+    "name": "Sarah",
+    "age": 15
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
