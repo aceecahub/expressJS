@@ -1,9 +1,16 @@
-import db from "./config/db.js";
+import express from "express";
+import userRoutes from "./routes/user.routes.js";
 
-try{
-    const conn = await db.getConnection()
-    console.log("Database connected successfully")
-    conn.release()
-}catch(error){
-    console.error("Database connection failed", error.message)
-}
+const app = express();
+const port = 3000;
+
+app.get('/', (req, res) => {
+    res.send("Hello World");
+})
+
+app.use(express.json());
+app.use('/users', userRoutes);
+
+app.listen(port, () => {
+    console.log(`Server is running at http://localhost:${port}`);
+});
