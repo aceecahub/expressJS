@@ -1,11 +1,10 @@
 import express from "express";
 import {
-  // getUser,
+  getUsers,
   getUserById,
   createUsers,
-  // updateUser, 
-  // deleteUser,
-  getUsers,
+  updateUsers, 
+  deleteUsers,
 } from "../controller/user.controller.js";
 import checkApiKey from "../middlewares/auth.middleware.js";
 
@@ -14,7 +13,7 @@ const router = express.Router();
 router.get("/", getUsers);
 router.get("/:id", getUserById);
 router.post("/", createUsers);
-// router.put("/:id", updateUser);
-// router.delete("/:id", deleteUser);
+router.put("/:id", updateUsers);
+router.delete("/:id", deleteUsers);
 
 export default router;

@@ -42,9 +42,9 @@ export const getUserById = async (req, res) => {
 
 // create data user
 export const createUsers = async (req, res) => {
-  try {
-    const { name } = req.body;
+  const { name } = req.body;
 
+  try {
     const [result] = await db.query("INSERT INTO users (name) VALUES (?)", [
       name,
     ]);
@@ -55,5 +55,42 @@ export const createUsers = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ message: "Error Create", error: error });
+  }
+};
+
+// update data user by id
+export const updateUsers = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+
+  try {
+    const [rows] = await db.query("UPDATE users SET name = ? WHERE id = ?", [name, id]);
+    res.status(201).json({
+      name: name,
+      message: "User updated successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Update",
+      error: error,
+    });
+  }
+};
+
+// delete data user by id
+export const deleteUsers = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [rows] = await db.query("DELETE FROM users WHERE id = ?", [id]);
+
+    res.status(201).json({
+      message: "User deleted successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error Delete",
+      error: error,
+    });
   }
 };
