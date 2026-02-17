@@ -1,10 +1,10 @@
 const checkApiKey = (req, res, next) => {
-  const apiKey = req.headers['api-key'];
+  const apiKey = req.headers['api-key'] || req.query.api_key;
 
-  if(!apiKey) {
-    return res.status(403).json(
-      { message: "Forbidden: API Key tidak ditemukan" }
-    )
+  if (!apiKey) {
+    return res.status(403).json({
+      message: "Forbidden: API Key tidak ditemukan",
+    });
   }
   next();
 }
