@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users</title>
+  </head>
+  <body>
+    <h2>users User Yang Diambil Dari Express JS</h2>
+    <a
+      style="margin-bottom: 10px; display: block"
+      href="http://localhost:3000/create"
+      ><button>Tambah</button></a
+    >
+    <table border="1" cellspacing="0" cellpadding="5">
+      <thead>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Action</th>
+      </thead>
+
+      <tbody id="userTable"></tbody>
+    </table>
+
+    <script>
+      fetch("http://localhost:3000/users")
+        .then((res) => res.json())
+        .then((users) => {
+          const table = document.getElementById("userTable");
+          users.rows.forEach((user) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td><a href="http://localhost:3000/edit/${user.id}"><button>Edit</button></a> <a href="http://localhost:3000/users/${user.id}?_method=DELETE"><button>Delete</button></a></td>
+                `;
+            table.appendChild(row);
+          });
+        })
+        .catch((error) => console.error("Error:", error));
+    </script>
+  </body>
+</html>

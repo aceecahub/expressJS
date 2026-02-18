@@ -45,9 +45,7 @@ export const createUsers = async (req, res) => {
   const { name } = req.body;
 
   try {
-    const [result] = await db.query("INSERT INTO users (name) VALUES (?)", [
-      name,
-    ]);
+    const [result] = await db.query("INSERT INTO users (name) VALUES (?)", [name]);
     res.status(201).json({
       id: result.insertId,
       name: name,
@@ -65,10 +63,17 @@ export const updateUsers = async (req, res) => {
 
   try {
     const [rows] = await db.query("UPDATE users SET name = ? WHERE id = ?", [name, id]);
-    res.status(201).json({
-      name: name,
-      message: "User updated successfully",
-    });
+
+    if(rows.affectedRows === 0){
+      res.status(404).json({
+        message: "User not found",
+      });
+    }else{
+      res.status(201).json({
+        name: name,
+        message: "User updated successfully",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Error Update",
@@ -84,9 +89,15 @@ export const deleteUsers = async (req, res) => {
   try {
     const [rows] = await db.query("DELETE FROM users WHERE id = ?", [id]);
 
-    res.status(201).json({
-      message: "User deleted successfully",
-    });
+    if (rows.affectedRows === 0) {
+      res.status(404).json({
+        message: "User not found",
+      });
+    } else {
+      res.status(201).json({
+        message: "User deleted successfully",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Error Delete",
