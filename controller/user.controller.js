@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import bcrypt from "bcrypt";
 
 // get all data user
 export const getUsers = async (req, res) => {
@@ -40,40 +41,38 @@ export const getUserById = async (req, res) => {
   }
 };
 
-// create data user
-export const createUsers = async (req, res) => {
-  const { name } = req.body;
+// create data user no hash password
+// export const createUsers = async (req, res) => {
+//   const { name } = req.body;
 
-  try {
-    const [result] = await db.query("INSERT INTO users (name) VALUES (?)", [name]);
-    res.status(201).json({
-      id: result.insertId,
-      name: name,
-      message: "User created successfully",
-    });
-  } catch (error) {
-    res.status(500).json({ message: "Error Create", error: error });
-  }
-};
+//   try {
+//     const [result] = await db.query("INSERT INTO users (name) VALUES (?)", [
+//       name,
+//     ]);
+//     res.status(201).json({
+//       id: result.insertId,
+//       name: name,
+//       message: "User created successfully",
+//     });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error Create", error: error });
+//   }
+// };
 
 // update data user by id
 export const updateUsers = async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { name, email, password } = req.body;
+  const hashPass = await bcrypt.hash(password, 10);
 
   try {
-    const [rows] = await db.query("UPDATE users SET name = ? WHERE id = ?", [name, id]);
-
-    if(rows.affectedRows === 0){
-      res.status(404).json({
-        message: "User not found",
-      });
-    }else{
-      res.status(201).json({
-        name: name,
-        message: "User updated successfully",
-      });
-    }
+    const [rows] = await db.query("UPDATE users SET name = ?, email = ?, password = ? WHERE id = ?", [name, email, hashPass, id]);
+    res.status(200).json({
+      name: name,
+      email: email,
+      password: hashPass,
+      message: "User updated successfully",
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error Update",
@@ -89,15 +88,9 @@ export const deleteUsers = async (req, res) => {
   try {
     const [rows] = await db.query("DELETE FROM users WHERE id = ?", [id]);
 
-    if (rows.affectedRows === 0) {
-      res.status(404).json({
-        message: "User not found",
-      });
-    } else {
-      res.status(201).json({
-        message: "User deleted successfully",
-      });
-    }
+    res.status(200).json({
+      message: "User deleted successfully",
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error Delete",
