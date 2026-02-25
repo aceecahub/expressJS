@@ -15,8 +15,8 @@ export const loginUsers = async (req, res) => {
         message: "Invalid email or password",
       });
     }
-    const user = rows[0];
 
+    const user = rows[0];
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {

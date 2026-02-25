@@ -2,8 +2,8 @@ import db from "../config/db.js";
 import bcrypt from "bcrypt";
 
 export const registerUsers = async (req, res) => {
+  const { name, email, password } = req.body;
   try {
-    const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({
