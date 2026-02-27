@@ -1,5 +1,6 @@
 import express from "express";
 import userRoutes from "./routes/user.routes.js";
+import categoriesRoutes from "./routes/categories.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 
 const app = express();
@@ -11,6 +12,7 @@ app.get('/', (req, res) => {
 
 app.use(express.json());
 app.use('/users', userRoutes);
+app.use('/categories', categoriesRoutes);
 
 app.use('/api', authRoutes);
 

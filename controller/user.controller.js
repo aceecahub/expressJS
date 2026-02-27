@@ -1,4 +1,4 @@
-import { getallServ, getByidServ, updateServ, deleteServ } from "../services/userService.js";
+import { getallServ, getByidServ, updateServ, deleteServ } from "../services/user.service.js";
 
 export const getallController = async (req, res) => {
   try{
