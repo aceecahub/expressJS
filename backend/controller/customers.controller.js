@@ -4,12 +4,13 @@ export const getCustomersController = async(req, res) => {
     try{
         const customers = await getCustomersServ()
         if(customers.length === 0){
-            return res.status(404).json({
-                message: "Customers not found"
+            return res.status(200).json({
+                message: "Fecthed data Customers Successfully",
+                data : customers
             })
         }else{
-            return res.status(200).json({
-                message : "Fecthed data Customers Successfully",
+            return res.status(404).json({
+                message : "Customers not found",
                 data : customers
             })
         }
