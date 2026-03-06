@@ -3,10 +3,10 @@ import { getCategoriesServ, createCategoriesServ, getCategoriesByIdServ, updateC
 // get all categories
 export const getCategoriesController = async (req, res) => {
     try {
-        const categories = await getCategoriesServ(req, res);
+        const categories = await getCategoriesServ();
         return res.status(200).json({
             message: "Categories fetched successfully",
-            data: categories,
+            data: categories
         })
     } catch (error) {
         return res.status(404).json({

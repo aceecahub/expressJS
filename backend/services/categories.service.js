@@ -1,8 +1,8 @@
 import { getCategories, createCategories, getCategoriesById, updateCategories, deleteCategories } from "../models/categories.model.js";
 
 // get data categories
-export const getCategoriesServ = async (req, res) => {
-const categories = await getCategories(req, res);
+export const getCategoriesServ = async () => {
+const categories = await getCategories();
 return categories;
 }
 
@@ -50,6 +50,9 @@ throw new Error("Category name is required");
 }
 
 const categories = await updateCategories(id, category_code, category_name);
+if(categories.affectedRows === 0){
+    throw new Error("Categories not found");
+}
 return {
 id: id,
 category_code: category_code,
