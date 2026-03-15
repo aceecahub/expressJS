@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import categoriesRoutes from "./routes/categories.routes.js";
 import authRoutes from "./routes/auth.routes.js";
@@ -12,8 +13,10 @@ app.get('/', (req, res) => {
 })
 
 app.use(express.json());
+app.use(cors());
+
 app.use('/users', userRoutes);
-app.use('/categories', categoriesRoutes);
+app.use('/api/categories', categoriesRoutes);
 app.use('/customers', customersRoutes);
 
 app.use('/api', authRoutes);

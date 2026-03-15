@@ -10,10 +10,10 @@ import { verifToken } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.get("/", verifToken, getCategoriesController);
-router.post("/", verifToken, createCategoriesController);
-router.get("/:id", verifToken, getCategoriesByIdController);
-router.put("/:id", verifToken, updateCategoriesController);
-router.delete("/:id", verifToken, deleteCategoriesController);
+router.get("/", getCategoriesController);
+router.post("/", createCategoriesController);
+router.get("/:id", getCategoriesByIdController);
+router.put("/:id", updateCategoriesController);
+router.delete("/:id", deleteCategoriesController);
 
 export default router;
