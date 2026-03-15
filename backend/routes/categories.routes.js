@@ -11,9 +11,9 @@ import { verifToken } from "../middlewares/auth.middleware.js";
 const router = express.Router();
 
 router.get("/", getCategoriesController);
-router.post("/", verifToken, createCategoriesController);
-router.get("/:id", verifToken, getCategoriesByIdController);
+router.post("/", createCategoriesController);
+router.get("/:id", getCategoriesByIdController);
 router.put("/:id", updateCategoriesController);
-router.delete("/:id", verifToken, deleteCategoriesController);
+router.delete("/:id", deleteCategoriesController);
 
 export default router;
